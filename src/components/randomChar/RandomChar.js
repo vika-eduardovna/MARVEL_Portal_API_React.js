@@ -9,7 +9,6 @@ import { ErrorMessage } from '../errorMessage/ErrorMessage';
 class RandomChar extends Component {
     constructor(props) {
         super(props);
-        this.updateChar()
     }
     state = {
         char: {},
@@ -18,6 +17,10 @@ class RandomChar extends Component {
     }
 
     marvelService = new MarvelService();
+    componentDidMount() {
+        this.updateChar();
+        //setInterval( this.updateChar, 2000)
+    }
 
     onCharLoaded = char => {
         this.setState({
@@ -49,6 +52,7 @@ class RandomChar extends Component {
 
         return (
             <div className="randomchar">
+
                 {errorMessage}
                 {spinner}
                 {content}
@@ -61,7 +65,7 @@ class RandomChar extends Component {
                     <p className="randomchar__title">
                         Or choose another one
                     </p>
-                    <button className="button button__main">
+                    <button onClick={this.updateChar} className="button button__main">
                         <div className="inner">try it</div>
                     </button>
                     <img src={mjolnir} alt="mjolnir" className="randomchar__decoration" />
@@ -74,10 +78,12 @@ class RandomChar extends Component {
 const View = ({ char }) => {
     const { name, description, thumbnail, homepage, wiki } = char;
     const isDescr = description ? description : 'Information about this character is missing or not found...'
+    let staticImgUrl = 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg'
+    
 
     return (
         <div className="randomchar__block">
-            <img src={thumbnail} alt="Random character" className="randomchar__img" />
+            <img style={{objectFit: staticImgUrl ? 'contain' : 'cover'}} src={thumbnail} alt="Random character" className="randomchar__img" />
             <div className="randomchar__info">
                 <p className="randomchar__name">{name}</p>
                 <p className="randomchar__descr">{isDescr}</p>
