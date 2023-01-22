@@ -26,9 +26,14 @@ class RandomChar extends Component {
         this.setState({
             char,
             loading: false,
-
         })
     }
+
+    onCharLoading = () => {
+        this.setState({
+            loading: true
+        })
+    } 
 
     onError = () => {
         this.setState({
@@ -38,6 +43,7 @@ class RandomChar extends Component {
     }
     updateChar = () => {
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
+        this.onCharLoading();
         this.marvelService
             .getSingleCharacter(id)
             .then(this.onCharLoaded)
@@ -78,12 +84,15 @@ class RandomChar extends Component {
 const View = ({ char }) => {
     const { name, description, thumbnail, homepage, wiki } = char;
     const isDescr = description ? description : 'Information about this character is missing or not found...'
-    let staticImgUrl = 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg'
-    
+    let imgStyle = { 'objectFit': 'cover' };
+    if (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
+        imgStyle = { 'objectFit': 'contain' };
+    }
+
 
     return (
         <div className="randomchar__block">
-            <img style={{objectFit: staticImgUrl ? 'contain' : 'cover'}} src={thumbnail} alt="Random character" className="randomchar__img" />
+            <img style={imgStyle} src={thumbnail} alt="Random character" className="randomchar__img" />
             <div className="randomchar__info">
                 <p className="randomchar__name">{name}</p>
                 <p className="randomchar__descr">{isDescr}</p>
