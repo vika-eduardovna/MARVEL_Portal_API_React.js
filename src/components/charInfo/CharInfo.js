@@ -14,29 +14,37 @@ class CharInfo extends Component {
     }
 
     marvelService = new MarvelService();
+
     componentDidMount() {
-        this.updateChar()
+        this.updateChar();
     }
-    componentDidUpdate(prevProps) {
+
+    componentDidUpdate(prevProps){
         if (this.props.charId !== prevProps.charId) {
-            this.updateChar()
+            this.updateChar();
         }
     }
+
     updateChar = () => {
-        const { charId } = this.props;
+        const {charId} = this.props;
         if (!charId) {
             return;
         }
+
         this.onCharLoading();
+
         this.marvelService
             .getSingleCharacter(charId)
             .then(this.onCharLoaded)
-            .catch(this.onError)
+            .catch(this.onError);
+
+            this.foo.bar = 0;
     }
-    onCharLoaded = char => {
+
+    onCharLoaded = (char) => {
         this.setState({
-            char,
-            loading: false,
+            char, 
+            loading: false
         })
     }
 
