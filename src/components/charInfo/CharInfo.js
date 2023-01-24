@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import Spinner from '../spinner/Spinner';
 import { ErrorMessage } from '../errorMessage/ErrorMessage';
 import Skeleton from '../skeleton/Skeleton'
@@ -19,14 +20,14 @@ class CharInfo extends Component {
         this.updateChar();
     }
 
-    componentDidUpdate(prevProps){
+    componentDidUpdate(prevProps) {
         if (this.props.charId !== prevProps.charId) {
             this.updateChar();
         }
     }
 
     updateChar = () => {
-        const {charId} = this.props;
+        const { charId } = this.props;
         if (!charId) {
             return;
         }
@@ -41,7 +42,7 @@ class CharInfo extends Component {
 
     onCharLoaded = (char) => {
         this.setState({
-            char, 
+            char,
             loading: false
         })
     }
@@ -120,4 +121,7 @@ const View = ({ char }) => {
     )
 }
 
+CharInfo.propTypes = {
+    charId: PropTypes.number,
+}
 export default CharInfo;

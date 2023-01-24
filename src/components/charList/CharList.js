@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import './charList.scss';
 import MarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
@@ -10,7 +11,9 @@ class CharList extends Component {
         charList: [],
         loading: true,
         error: false,
-        newItemLoading: false
+        newItemLoading: false,
+        offset: 1548,
+        charListEnded: false
     }
 
     marvelService = new MarvelService();
@@ -33,11 +36,16 @@ class CharList extends Component {
     }
 
     onCharListLoaded = (new_charList) => {
+        let ended = false;
+        if (new_charList.length < 9) {
+            ended = true
+        }
         this.setState(({ offset, charList }) => ({
             charList: [...charList, ...new_charList],
             loading: false,
             newItemLoading: false,
-            offset: offset + 9
+            offset: offset + 9,
+            charListEnded: ended
         }))
     }
 
@@ -67,15 +75,13 @@ class CharList extends Component {
         });
 
         return (
-            <ul className="char__grid">
-                {items}
-            </ul>
+            <ul className="char__grid">{items}</ul>
         )
     }
 
     render() {
 
-        const { charList, loading, error, newItemLoading, offset } = this.state;
+        const { charList, loading, error, newItemLoading, offset, charListEnded } = this.state;
 
         const items = this.renderItems(charList);
 
@@ -91,7 +97,8 @@ class CharList extends Component {
                 <button
                     className="button button__main button__long"
                     disabled={newItemLoading}
-                    onClick={() => this.onRequest(offset)}>
+                    onClick={() => this.onRequest(offset)}
+                    style={{ 'display': charListEnded ? 'none' : 'block' }}>
                     <div className="inner">load more</div>
                 </button>
             </div>
@@ -99,4 +106,7 @@ class CharList extends Component {
     }
 }
 
+CharList.propTypes = {
+    onCharSelected: PropTypes.number
+}
 export default CharList;

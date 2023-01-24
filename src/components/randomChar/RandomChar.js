@@ -7,9 +7,7 @@ import { ErrorMessage } from '../errorMessage/ErrorMessage';
 
 
 class RandomChar extends Component {
-    constructor(props) {
-        super(props);
-    }
+    
     state = {
         char: {},
         loading: true,
