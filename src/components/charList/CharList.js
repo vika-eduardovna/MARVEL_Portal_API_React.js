@@ -75,7 +75,7 @@ class CharList extends Component {
                 imgStyle = { 'objectFit': 'unset' };
             }
 
-            const active_style = ({isActive}) => isActive ? 'img_selected' : ''
+            //const active_style = ({isActive}) => isActive ? 'img_selected' : ''
 
             return (
                 <li 
