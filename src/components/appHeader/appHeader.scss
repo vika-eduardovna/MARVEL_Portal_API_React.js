@@ -9,8 +9,10 @@
         font-weight: bold;
         font-size: 28px;
         line-height: 37px;
+
         span {
             color: $main-color;
+            text-transform: uppercase;
         }
     }
     &__menu {
@@ -22,6 +24,7 @@
             line-height: 32px;
             li {
                 margin: 0 8px;
+                
                 a:hover {
                     color: $main-color;
                 }

@@ -1,32 +1,28 @@
 import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import './charList.scss';
-import MarvelService from '../../services/MarvelService';
+import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
 import { ErrorMessage } from '../errorMessage/ErrorMessage';
 
 const CharList = (props) => {
     const [charList, setCharList] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
     const [newItemLoading, setNewItemLoading] = useState(false);
     const [offset, setOffset] = useState(210);
     const [charEnded, setCharEnded] = useState(false);
 
-    const marvelService = new MarvelService();
+    const { loading, error, getAllCharacters } = useMarvelService();
 
     useEffect(() => {
         onRequest();
     }, [])
 
     const onRequest = (offset) => {
-        onCharListLoading();
-        marvelService.getAllCharacters(offset)
+        setNewItemLoading(true)
+        getAllCharacters(offset)
             .then(onCharListLoaded)
-            .catch(onError)
     }
 
-    const onCharListLoading = () => setNewItemLoading(true);
     const onCharListLoaded = (newCharList) => {
         let ended = false;
         if (newCharList.length < 9) {
@@ -34,19 +30,11 @@ const CharList = (props) => {
         }
 
         setCharList(charList => [...charList, ...newCharList]);
-        setLoading(loading => false);
         setNewItemLoading(newItemLoading => false);
         setOffset(offset => offset + 9);
         setCharEnded(charEnded => ended);
     }
-
-    const onError = () => {
-        setError(true);
-        setLoading(loading => false);
-    }
-
     const itemRefs = useRef([]);
-
     const focusOnItem = (id) => {
         itemRefs.current.forEach(item => item.classList.remove('char__item_selected'));
         itemRefs.current[id].classList.add('char__item_selected');
@@ -81,7 +69,7 @@ const CharList = (props) => {
                 </li>
             )
         });
-       
+
         return (
             <ul className="char__grid">
                 {items}
