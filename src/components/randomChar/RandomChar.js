@@ -9,7 +9,7 @@ import { ErrorMessage } from '../errorMessage/ErrorMessage';
 const RandomChar = () => {
 
     const [char, setChar] = useState(null);
-    const {loading, error, getSingleCharacter} = useMarvelService();
+    const {loading, error, getSingleCharacter, clearError} = useMarvelService();
 
     useEffect(() => {
         updateChar();
@@ -17,6 +17,7 @@ const RandomChar = () => {
 
     const onCharLoaded = (char) => setChar(char);
     const updateChar = () => {
+        clearError();
         const id = Math.floor(Math.random() * (1011400 - 1011000)) + 1011000;
         getSingleCharacter(id)
             .then(onCharLoaded)
