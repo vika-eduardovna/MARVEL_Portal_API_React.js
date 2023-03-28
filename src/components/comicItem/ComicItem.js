@@ -1,7 +1,7 @@
 import React from 'react'
 import './comicItem.scss'
 
-export default function ComicItem({image, price, title}) {
+export default function ComicItem({ image, price, title }) {
     return (
         <>
             <li className="comics__item">

@@ -33,7 +33,9 @@ const CharList = (props) => {
         setNewItemLoading(newItemLoading => false);
         setOffset(offset => offset + 9);
         setCharEnded(charEnded => ended);
-    }
+    };
+
+    console.log('charlist');
     const itemRefs = useRef([]);
     const focusOnItem = (id) => {
         itemRefs.current.forEach(item => item.classList.remove('char__item_selected'));

@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { Route, Routes } from 'react-router-dom';
+import Layout from "../Layout/Layout";
+import MainPage from "../../pages/mainPage/MainPage";
 import AppHeader from "../appHeader/AppHeader";
 import ComicsList from "../comicsList/ComicsList";
 import AppBanner from "../appBanner/AppBanner";
@@ -7,7 +10,7 @@ import RandomChar from "../randomChar/RandomChar";
 import CharList from "../charList/CharList";
 import CharInfo from "../charInfo/CharInfo";
 import decoration from '../../resources/img/vision.png';
-import ErrorBoundary from '../errorBoundary/ErrorBoundary'
+
 
 const App = () => {
 
@@ -16,24 +19,28 @@ const App = () => {
 
     return (
         <div className="app">
-            <AppHeader />
-            <main>
-                <AppBanner/>
-                <ComicsList/>
-                {/* <ErrorBoundary>
-                    <RandomChar />
-                </ErrorBoundary>
-                <div className="char__content">
-                    <CharList onCharSelected={onCharSelected} />
-                    <ErrorBoundary>
-                        <CharInfo charId={selectedChar} />
-                    </ErrorBoundary>
-                </div>
-                <img className="bg-decoration" src={decoration} alt="vision" /> */}
-            </main>
+                <Routes>
+                    <Route path='/' element={<Layout />}>
+                        <Route index element={<MainPage 
+                            onCharSelected={onCharSelected}
+                            charId={selectedChar}/>} />
+                        <Route path='/comics' element={<ComicsList />} />
+                    </Route>
+                    
+                   
+                    
+                </Routes>
+           
         </div>
     )
 
 }
+
+{/* <CharList onCharSelected={onCharSelected} />
+
+<CharInfo charId={selectedChar} /> */}
+
+{/* <AppBanner/>
+                <ComicsList/> */}
 
 export default App;
