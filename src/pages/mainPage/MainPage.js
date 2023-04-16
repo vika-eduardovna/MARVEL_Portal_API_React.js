@@ -3,6 +3,7 @@ import ErrorBoundary from '../../components/errorBoundary/ErrorBoundary'
 import RandomChar from '../../components/randomChar/RandomChar';
 import CharInfo from '../../components/charInfo/CharInfo';
 import CharList from '../../components/charList/CharList';
+import CharSearchForm from '../../components/CharSearchForm/charSearchForm';
 import './mainPage.scss'
 
 export default function MainPage() {
@@ -20,9 +21,14 @@ export default function MainPage() {
                 <ErrorBoundary>
                     <CharList onCharSelected={onCharSelected} />
                 </ErrorBoundary>
-                <ErrorBoundary>
-                    <CharInfo charId={selectedChar} />
-                </ErrorBoundary>
+                <div className="char_form">
+                    <ErrorBoundary>
+                        <CharInfo charId={selectedChar} />
+                    </ErrorBoundary>
+                    <ErrorBoundary>
+                        <CharSearchForm />
+                    </ErrorBoundary>
+                </div>
             </div>
         </>
     )
